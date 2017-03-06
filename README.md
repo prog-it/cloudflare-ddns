@@ -26,9 +26,9 @@ DDNS-клиент для обновления IP-адреса с помощью 
 2. Перейти в папку со скриптом: ``cd cloudflare-ddns``
 3. Сделать копию файла "inc/config.php.sample": ``cp inc/config.php.sample inc/config.php``
 4. Настроить параметры в конфиг-файле "inc/config.php". В нем есть подробные комментарии
-5. Создать CRON задачу обновления IP. Вместо cron_key указать ключ запуска CRON из конфиг-файла (находится в самом низу)
+5. Создать CRON задачу обновления IP. Вместо cron_token указать токен запуска CRON из конфиг-файла (находится в самом низу)
 
-``*/5 * * * * /path/to/cloudflare-ddns/ddns.php --token="cron_key"``
+``*/5 * * * * /path/to/cloudflare-ddns/ddns.php --token="cron_token"``
 
 
 ## Системные требования
