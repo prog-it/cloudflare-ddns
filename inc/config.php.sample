@@ -1,0 +1,119 @@
+<?php
+
+return [
+	# Параметры API Cloudflare
+	'api' => [
+		# Email на Cloudflare. Например: "login@example.com"
+		'email' => '',
+		# API ключ. Получить: https://www.cloudflare.com/a/account/my-account
+		'key' => '',
+		# TTL A и AAAA записей (сек.) >= 120. Если = 1, то будет выбран "Автоматически" (выберет сам Cloudflare)
+		'ttl' => 120,
+		# Имя домена изменяемых DNS записей. Например: "example.com"
+		'domain' => '',
+		# Полные имена записей, параметры которых нужно изменить. Например: "my.computer.example.com"
+		# Имена записей должны быть частью домена, который задан выше.
+		# !!! Если такая запись отсутствует, то она будет создана
+		'records' => [
+			'',
+		],
+	],
+	
+	# Параметры получения IP
+	'ip' => [
+		# Кол-во попыток получить текущий IP. Для IPv4 и IPv6 по отдельности
+		'loops' => 3,
+		# Включена ли проверка корректности IP при получении
+		'validate' => true,
+		# Включено ли проверка изменения IPv4. Если отключено, A запись изменяться НЕ будет
+		'ipv4_enabled' => true,
+		# Включено ли проверка изменения IPv6. Если отключено, AAAA запись изменяться НЕ будет
+		'ipv6_enabled' => true,		
+	],	
+
+	# База
+	'db' => [
+		# Текущий IPv4
+		'ipv4' => 'data/ipv4.dat',
+		# Текущий IPv6
+		'ipv6' => 'data/ipv6.dat',		
+		# Куки для cURL
+		'cookie' => 'data/cookie.dat',
+		# Лог
+		'log' => 'data/log.dat',
+	],
+	
+	# Параметры Лога
+	'log' => [
+		# Включен или отключен Лог
+		'enabled' => true,
+		# Включена ли очистка при превышении размера файла
+		'clean' => true,
+		# Записывать все события (IP не изменился, DNS запись отсутствует...). Полезно для отладки
+		'detail' => true,
+		# Максимальный размер файла (КБ)
+		'max_filesize' => 1024,
+		# Разделитель в лог файлах
+		'delim' => '|---|',		
+	],	
+	
+	# Параметры cURL
+	'curl' => [
+		# UserAgent
+		'useragent' => 'Mozilla/5.0 (compatible; MSIE 11.0; Windows NT 6.3; Trident/6.0)',
+		# Timeout запросов (секунд)
+		'timeout' => 7,
+		# Допустимые коды получаемых страниц. Влияет только при получении текущего IP
+		'codes' => [ 200 ],
+	],
+	
+	# Параметры PHP
+	'php' => [
+		# Путь к интерпретатору
+		'path' => '/usr/bin/php5',
+		# Для прошивок LEDE (OpenWRT)
+		//'path' => '/usr/bin/php-cli',
+	],	
+	
+	# Сервисы получения IP. Порядок НЕ имеет значения, будет выбран случайным образом
+	'services' => [
+		# IPv4
+		'ipv4' => [
+			'http://ipv4.icanhazip.com',
+			'http://dynupdate.no-ip.com/ip.php',
+			'http://checkip.amazonaws.com',
+			'http://whatismyip.akamai.com',
+			'http://checkip.dy.fi',
+			'http://checkip.eu5.org/?raw',
+			'http://checkip.6te.net/?raw',
+			'http://myip.dnsmadeeasy.com',
+			'http://checkip.96.lt/?raw',
+			'http://whatismijnip.nl',
+			'http://eth0.me',
+			# Резерв. Можно раскомментировать
+			//'http://ipv4.whatismyv6.com',
+			//'http://www.ip-api.com/json/?fields=query',
+			//'https://api.ipify.org',
+			//'https://yandex.ru/internet',
+		],
+		# IPv6
+		'ipv6' => [
+			'http://ipv6.icanhazip.com',
+			'http://checkip.dns.he.net',
+			'https://getmyip.000webhostapp.com/?raw',
+			# Резерв. Можно раскомментировать
+			//'http://ipv6.whatismyv6.com',
+			//'http://wanip.info',
+			//'http://get.youripfast.com',
+			//'https://yandex.ru/internet',
+		],		
+	],	
+	
+	# Cron
+	'cron' => [
+		# Ключ запуска
+		'token' => 'brh5YXrb6MYwqX8tnV',
+	],		
+	
+];
+
