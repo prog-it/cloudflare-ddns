@@ -13,6 +13,10 @@ class Config {
     protected static $path = './inc/config.php';
 	/** @var array */
     protected static $data;
+	/** @var string */
+    protected static $last_key;	
+	/** @var array */
+    protected static $last_data;
 	/** @var */
     protected static $default = null;
 	
@@ -33,9 +37,9 @@ class Config {
 	}
 	
 	/**
-	* Задать другой путь к конфиг-файлу
+	* Задать путь к конфиг-файлу
 	*
-	* @param string $path Путь к другому конфиг-файлу
+	* @param string $path Путь к конфиг-файлу
 	*
 	* @return boolean TRUE Если удалось установить новый путь к конфиг-файлу
 	*/
@@ -49,6 +53,17 @@ class Config {
 	}
 
 	/**
+	* Получить значение последнего запрошенного параметра
+	*
+	* @param string $key Параметр, значение которого необходимо получить
+	*
+	* @return boolean FALSE Если не удалось получить значение параметра
+	*/	
+	private static function getLastData($key) {
+		return isset(self::$last_key) && self::$last_key == $key ? self::$last_data : false;
+	}
+
+	/**
 	* Получить значение параметра
 	*
 	* @param string $key Параметр, значение которого необходимо получить
@@ -58,18 +73,24 @@ class Config {
 	*/
     public static function get($key, $default = null) {
         self::$default = $default;
+		$last_data = self::getLastData($key);
 
-        $segments = explode('.', $key);
-        $data = self::init();
-
-        foreach ($segments as $segment) {
-            if (isset($data[$segment])) {
-                $data = $data[$segment];
-            } else {
-                $data = self::$default;
-                break;
-            }
-        }
+		if ( $last_data !== false ) {
+			$data = $last_data;
+		} else {
+			$data = self::init();
+			$segments = explode('.', $key);
+			foreach ($segments as $segment) {
+				if (isset($data[$segment])) {
+					$data = $data[$segment];
+				} else {
+					$data = self::$default;
+					break;
+				}
+			}
+			self::$last_key = $key;
+			self::$last_data = $data;
+		}
         return $data;
     }
 	
