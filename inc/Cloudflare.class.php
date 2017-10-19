@@ -2,7 +2,12 @@
 
 /**
 * Cloudflare API v4
-* https://github.com/mmerian/cloudflare
+*
+* @copyright	2017 progit
+* @link 		https://github.com/prog-it/cloudflare-ddns-multiaccounts
+*
+* Forked from https://github.com/mmerian/cloudflare
+*
 */
 
 class CloudflareException extends Exception
@@ -108,29 +113,28 @@ class Cloudflare
 		$headers = array(
 			'X-Auth-Email: ' . $this->email,
 			'X-Auth-Key: ' . $this->apiKey,
+			'Content-type: application/json',
 		);
 
 		$url = self::ENDPOINT . ltrim($endpoint, '/');
+		$json_params = json_encode($params);
 		switch ($method) {
 			case self::POST :
 				curl_setopt($curl, CURLOPT_POST, true);
-				curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $json_params);
 				break;
 			case self::PUT :
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
-				curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
-				$headers[] = 'Content-type: application/json';
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $json_params);
 				break;
 			case self::PATCH :
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PATCH');
-				curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
-				$headers[] = 'Content-type: application/json';
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $json_params);
 				break;
 			case self::DELETE :
 				curl_setopt($curl, CURLOPT_POST, true);
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
-				curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
-				$headers[] = 'Content-type: application/json';
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $json_params);
 				break;
 			default:
 				if ($params) {
