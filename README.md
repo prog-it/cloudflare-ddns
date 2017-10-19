@@ -1,5 +1,9 @@
 # cloudflare-ddns
 
+
+### Скрипт устарел и больше не будет обновляться. Используйте [новую версию](https://github.com/prog-it/cloudflare-ddns-multiaccounts)
+
+
 DDNS-клиент для обновления IP-адреса с помощью бесплатного DNS сервиса от CloudFlare, используя API.
 
 
